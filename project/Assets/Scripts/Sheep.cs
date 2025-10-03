@@ -1,16 +1,13 @@
 using UnityEngine;
 
-public class Sheep : MonoBehaviour
-{
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        
-    }
+public class Sheep : MonoBehaviour {
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+    private const float BORDER_COLLIE_RADIUS = 20f;
+    [SerializeField] private LayerMask borderCollieMask;
+
+    private void Update() {
+        Collider[] hitColliders = Physics.OverlapSphere(transform.position, BORDER_COLLIE_RADIUS, borderCollieMask);
+
+        Debug.Log(hitColliders.Length > 0);
     }
 }
