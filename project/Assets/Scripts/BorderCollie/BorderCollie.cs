@@ -37,8 +37,8 @@ public class BorderCollie : MonoBehaviour {
     }
 
     private void HandleInput() {
-        horizontalInput = Input.GetAxisRaw("Horizontal");
-        verticalInput = Input.GetAxisRaw("Vertical");
+        horizontalInput = GameInput.GetMovementVectorNormalized().x;
+        verticalInput = GameInput.GetMovementVectorNormalized().y;
     }
 
     private void HandleMovement() {
