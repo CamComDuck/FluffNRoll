@@ -6,6 +6,7 @@ public class SheepSO : ScriptableObject {
 
     [SerializeField] private String sheepName;
     [SerializeField] private Material material;
+    [SerializeField] private Color sheepColor;
 
     public String GetName() {
         return sheepName;
@@ -13,5 +14,9 @@ public class SheepSO : ScriptableObject {
 
     public Material GetMaterial() {
         return material;
+    }
+
+    public Color GetColor() {
+        return sheepColor;
     }
 }

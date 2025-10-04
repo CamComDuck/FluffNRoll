@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Barn : MonoBehaviour {
 
@@ -10,8 +11,13 @@ public class Barn : MonoBehaviour {
     [SerializeField] private List<MeshRenderer> sheepColorMeshRenderers;
     [SerializeField] private SheepSO targetSheepSO; // Will be set programmatically
 
+    [SerializeField] private Transform sheepPanel;
+    [SerializeField] private Image sheepImage;
+
     private List<Sheep> sheepInBarn = new();
     private int totalSheepNeeded;
+
+    private List<Image> sheepImages = new();
 
     private void Start() {
         foreach (MeshRenderer meshRenderer in sheepColorMeshRenderers) {
@@ -25,8 +31,12 @@ public class Barn : MonoBehaviour {
         foreach (Sheep sheep in allSheepInScene) {
             if (sheep.GetSheepSO() == targetSheepSO) {
                 totalSheepNeeded += 1;
+                Image newSheepImage = Instantiate(sheepImage, sheepPanel);
+                sheepImages.Add(newSheepImage);
             }
         }
+
+        sheepPanel.GetComponent<Image>().color = targetSheepSO.GetColor();
     }
 
     private void OnTriggerEnter(Collider other) {
@@ -35,6 +45,9 @@ public class Barn : MonoBehaviour {
             if (!sheepInBarn.Contains(collidedSheep) && collidedSheep.IsStanding() && targetSheepSO == collidedSheep.GetSheepSO()) {
                 sheepInBarn.Add(collidedSheep);
                 collidedSheep.ArrivedAtBarn();
+
+                int index = sheepInBarn.Count - 1;
+                sheepImages[index].color = targetSheepSO.GetColor();
 
                 if (HasAllSheepRequired()) {
                     OnAllSheepArrived?.Invoke(this, EventArgs.Empty);
@@ -48,6 +61,9 @@ public class Barn : MonoBehaviour {
         if (collidedSheep != null) { // collided with sheep
             if (sheepInBarn.Contains(collidedSheep)) {
                 sheepInBarn.Remove(collidedSheep);
+
+                int index = sheepInBarn.Count;
+                sheepImages[index].color = Color.white;
 
                 if (sheepInBarn.Count == totalSheepNeeded - 1) {
                     OnLastSheepLeft?.Invoke(this, EventArgs.Empty);
