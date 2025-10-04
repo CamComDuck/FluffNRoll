@@ -124,7 +124,7 @@ GameObject:
   - component: {fileID: 232442880194135052}
   - component: {fileID: 8778494280077785378}
   m_Layer: 0
-  m_Name: Head (1)
+  m_Name: Tail
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -273,6 +273,11 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 0
   standParticles: {fileID: 2816030724205521664}
+  sheepColorMeshRenderers:
+  - {fileID: 6004322858012119183}
+  - {fileID: 1218748821349574824}
+  - {fileID: 232442880194135052}
+  sheepSO: {fileID: 0}
 --- !u!54 &4181619833138634709
 Rigidbody:
   m_ObjectHideFlags: 0

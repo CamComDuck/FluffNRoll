@@ -959,6 +959,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8922819636881418133, guid: 4e06737f660ad48498e662db209ed25b, type: 3}
+      propertyPath: sheepSO
+      value: 
+      objectReference: {fileID: 11400000, guid: 991d5586e20fdf64781e4bb880fa33c6, type: 2}
+    - target: {fileID: 8922819636881418133, guid: 4e06737f660ad48498e662db209ed25b, type: 3}
       propertyPath: borderCollieMask.m_Bits
       value: 128
       objectReference: {fileID: 0}

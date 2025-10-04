@@ -1,9 +1,13 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class Sheep : MonoBehaviour {
     
     [SerializeField] private LayerMask borderCollieMask;
     [SerializeField] private ParticleSystem standParticles;
+    [SerializeField] private List<MeshRenderer> sheepColorMeshRenderers;
+
+    [SerializeField] private SheepSO sheepSO;
 
     private const float BORDER_COLLIE_RADIUS = 20f;
     private const float MOVE_SPEED = 30f;
@@ -13,8 +17,18 @@ public class Sheep : MonoBehaviour {
 
     Vector3 directionToRunAway;
 
+
     private void Awake() {
         rigidbody = GetComponent<Rigidbody>();
+    }
+
+    private void Start() {
+        foreach (MeshRenderer meshRenderer in sheepColorMeshRenderers) {
+            List<Material> settingMaterials = new() {
+                sheepSO.GetMaterial()
+            };
+            meshRenderer.SetMaterials(settingMaterials);
+        }
     }
 
     private void FixedUpdate() {
