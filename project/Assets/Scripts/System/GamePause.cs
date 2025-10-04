@@ -4,11 +4,11 @@ using UnityEngine.UI;
 
 public class GamePause : MonoBehaviour {
 
-    [SerializeField] private Transform gamePausePrefab;
+    [SerializeField] private PausePanel gamePausePrefab;
 
     public static event EventHandler OnUnpauseClicked;
 
-    private Transform spawnedPanel;
+    private PausePanel spawnedPanel;
 
     private void Start() {
         GameSM.Instance.OnGameStateStarted += GameSM_OnGameStateStarted;
@@ -35,13 +35,17 @@ public class GamePause : MonoBehaviour {
         spawnedPanel.transform.SetParent(gameObject.transform, false);
         spawnedPanel.gameObject.SetActive(true);
 
-        Button restartButton = GetComponentInChildren<Button>();
-        restartButton.onClick.AddListener(OnButtonClicked);
+        spawnedPanel.GetUnpauseButton().onClick.AddListener(OnUnpauseButtonClicked);
+        spawnedPanel.GetMenuButton().onClick.AddListener(OnMenuButtonClicked);
     }
 
-    private void OnButtonClicked() {
+    private void OnUnpauseButtonClicked() {
         Destroy(spawnedPanel.gameObject);
         OnUnpauseClicked?.Invoke(this, EventArgs.Empty);
+    }
+
+    private void OnMenuButtonClicked() {
+        Debug.Log("TODO: Transition to main menu");
     }
     
 }

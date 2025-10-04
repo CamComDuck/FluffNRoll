@@ -979,7 +979,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 82105c46ceec400418f1fd94a16d01f7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GamePause
-  gamePausePrefab: {fileID: 6518568594925616937, guid: e57702f6116bd8a4390178899f2e82f9, type: 3}
+  gamePausePrefab: {fileID: 7804568250618829626, guid: e57702f6116bd8a4390178899f2e82f9, type: 3}
 --- !u!1 &1382769650
 GameObject:
   m_ObjectHideFlags: 0
