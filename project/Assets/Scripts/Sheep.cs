@@ -3,6 +3,7 @@ using UnityEngine;
 public class Sheep : MonoBehaviour {
     
     [SerializeField] private LayerMask borderCollieMask;
+    [SerializeField] private ParticleSystem standParticles;
 
     private const float BORDER_COLLIE_RADIUS = 20f;
     private const float MOVE_SPEED = 30f;
@@ -39,7 +40,7 @@ public class Sheep : MonoBehaviour {
                     rigidbody.angularVelocity = Vector3.zero;
                     transform.forward = directionToRunAway;
                     hasStood = true;
-                    Debug.Log("Stand");
+                    standParticles.Play();
                 }
             }
         }
