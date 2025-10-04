@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class GameEnd : MonoBehaviour {
@@ -27,7 +28,7 @@ public class GameEnd : MonoBehaviour {
     }
 
     private void OnMenuButtonClicked() {
-        Debug.Log("TODO: Transition to main menu");
+        SceneManager.LoadScene("TitleScene");
     }
     
 }

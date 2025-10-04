@@ -1,4 +1,5 @@
 using System;
+using UnityEditor;
 using UnityEngine;
 
 public class GameSM : MonoBehaviour {
@@ -45,6 +46,7 @@ public class GameSM : MonoBehaviour {
         if (newState == GameState.GamePlaying) {
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;
+            Time.timeScale = 1f;
         }
 
         gameState = newState;

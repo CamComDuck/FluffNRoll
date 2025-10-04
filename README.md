@@ -2,7 +2,7 @@
 
  - Camden's game submission for Ludum Dare 58 under the theme "Collector"
  - See submission here: https://ldjam.com/events/ludum-dare/58/$417343
- - Play game on Itch.io here: https://cam-com.itch.io/ludum-dare-58
+ - Play game on Itch.io here: https://cam-com.itch.io/fluff-n-roll
 
 ## Third-Party Assets
 
