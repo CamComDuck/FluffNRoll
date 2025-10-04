@@ -19,6 +19,7 @@ public class GameSM : MonoBehaviour {
     }
 
     private GameState gameState;
+    private float gameTime = 0f;
 
     private void Awake() {
         if (Instance != null) Debug.LogError("There is more than 1 GameSM!");
@@ -27,8 +28,15 @@ public class GameSM : MonoBehaviour {
         TransitionState(GameState.GamePlaying);
     }
 
+    private void Update() {
+        if (IsGamePlaying()) {
+            gameTime += Time.deltaTime;
+        }
+    }
+
     private void Start() {
-        // TimeSM.Instance.OnGameWon += TimeStateMachine_OnGameWon;
+        SheepBarnCounter.Instance.OnGameWon += SheepBarnCounter_OnGameWon;
+
         GameInput.Instance.OnPauseAction += GameInput_OnPauseAction;
         GamePause.OnUnpauseClicked += GamePause_OnUnpauseClicked;
     }
@@ -38,16 +46,22 @@ public class GameSM : MonoBehaviour {
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;
         }
-        
+
         gameState = newState;
+
+        if (!IsGamePlaying()) {
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+        }
+
         OnGameStateStarted?.Invoke(this, new GameEventArgs {
             gameState = gameState
         });
     }
 
-    // private void TimeStateMachine_OnGameWon(object sender, System.EventArgs e) {
-    //     TransitionState(GameState.GameOverWin);
-    // }
+    private void SheepBarnCounter_OnGameWon(object sender, System.EventArgs e) {
+        TransitionState(GameState.GameOverWin);
+    }
 
     private void GamePause_OnUnpauseClicked(object sender, System.EventArgs e) {
         Time.timeScale = 1f;
@@ -58,8 +72,6 @@ public class GameSM : MonoBehaviour {
         if (IsGamePlaying()) { // Pause
             Time.timeScale = 0f;
             TransitionState(GameState.Paused);
-            Cursor.lockState = CursorLockMode.None;
-            Cursor.visible = true;
 
         } else if (gameState == GameState.Paused) { // Unpause
             Time.timeScale = 1f;
@@ -73,6 +85,10 @@ public class GameSM : MonoBehaviour {
 
     public bool IsGameOver() {
         return gameState == GameState.GameOverLose || gameState == GameState.GameOverWin;
+    }
+
+    public float GetGameTime() {
+        return gameTime;
     }
     
 }

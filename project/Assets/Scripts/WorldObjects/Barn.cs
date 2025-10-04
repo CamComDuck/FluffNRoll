@@ -3,6 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Barn : MonoBehaviour {
+
+    public event EventHandler OnAllSheepArrived;
+    public event EventHandler OnLastSheepLeft;
+
     [SerializeField] private List<MeshRenderer> sheepColorMeshRenderers;
     [SerializeField] private SheepSO targetSheepSO; // Will be set programmatically
 
@@ -31,6 +35,10 @@ public class Barn : MonoBehaviour {
             if (!sheepInBarn.Contains(collidedSheep) && collidedSheep.IsStanding() && targetSheepSO == collidedSheep.GetSheepSO()) {
                 sheepInBarn.Add(collidedSheep);
                 collidedSheep.ArrivedAtBarn();
+
+                if (HasAllSheepRequired()) {
+                    OnAllSheepArrived?.Invoke(this, EventArgs.Empty);
+                }
             }
         }
     }
@@ -40,6 +48,10 @@ public class Barn : MonoBehaviour {
         if (collidedSheep != null) { // collided with sheep
             if (sheepInBarn.Contains(collidedSheep)) {
                 sheepInBarn.Remove(collidedSheep);
+
+                if (sheepInBarn.Count == totalSheepNeeded - 1) {
+                    OnLastSheepLeft?.Invoke(this, EventArgs.Empty);
+                }
             }
         }
     }
