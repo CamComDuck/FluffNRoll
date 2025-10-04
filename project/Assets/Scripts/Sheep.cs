@@ -31,8 +31,6 @@ public class Sheep : MonoBehaviour {
         }
         var rend = standParticles.GetComponent<ParticleSystemRenderer>();
         rend.material = sheepSO.GetMaterial();
-
-        Barn.OnCorrectSheepArrived += Barn_OnCorrectSheepArrived;
     }
 
     private void FixedUpdate() {
@@ -42,7 +40,6 @@ public class Sheep : MonoBehaviour {
             if (borderCollie == null) Debug.LogError("Sheep hit something not a BorderCollie");
 
             Vector3 borderColliePosition = borderCollie.transform.position;
-
 
             directionToRunAway = transform.position - borderColliePosition;
             directionToRunAway.Normalize();
@@ -64,10 +61,9 @@ public class Sheep : MonoBehaviour {
         }
     }
 
-    private void Barn_OnCorrectSheepArrived(object sender, Barn.CorrectSheepArgs e) {
-        if (e.sheep == this) {
-            standParticles.Play();
-        }
+    public void ArrivedAtBarn() {
+        standParticles.Play();
+        
     }
 
     public bool IsStanding() {
