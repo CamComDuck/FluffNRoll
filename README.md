@@ -1,11 +1,11 @@
-# Ludum Dare 58 Game (Title WIP)
+# Fluff 'n Roll
 
- - Camden's game submission for Ludum Dare 58 under the theme "TBD"
+ - Camden's game submission for Ludum Dare 58 under the theme "Collector"
  - See submission here: https://ldjam.com/events/ludum-dare/58/$417343
  - Play game on Itch.io here: https://cam-com.itch.io/ludum-dare-58
 
 ## Third-Party Assets
 
- - All graphics and sounds are original
- - Font "TBD" from [Google Fonts]() licensed under [Open Font License](https://openfontlicense.org/open-font-license-official-text/)
+ - All graphics, models, and sounds are original
+ - Font "TBD" from [Google Fonts](https://fonts.google.com/specimen/Coiny) licensed under [Open Font License](https://openfontlicense.org/open-font-license-official-text/)
 
