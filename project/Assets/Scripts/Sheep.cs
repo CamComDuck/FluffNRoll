@@ -2,12 +2,12 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Sheep : MonoBehaviour {
-    
+
     [SerializeField] private LayerMask borderCollieMask;
     [SerializeField] private ParticleSystem standParticles;
     [SerializeField] private List<MeshRenderer> sheepColorMeshRenderers;
 
-    [SerializeField] private SheepSO sheepSO;
+    [SerializeField] private SheepSO sheepSO; // Will be set on instantiation
 
     private const float BORDER_COLLIE_RADIUS = 20f;
     private const float MOVE_SPEED = 30f;
@@ -29,6 +29,10 @@ public class Sheep : MonoBehaviour {
             };
             meshRenderer.SetMaterials(settingMaterials);
         }
+        var rend = standParticles.GetComponent<ParticleSystemRenderer>();
+        rend.material = sheepSO.GetMaterial();
+
+        Barn.OnCorrectSheepArrived += Barn_OnCorrectSheepArrived;
     }
 
     private void FixedUpdate() {
@@ -54,9 +58,23 @@ public class Sheep : MonoBehaviour {
                     rigidbody.angularVelocity = Vector3.zero;
                     transform.forward = directionToRunAway;
                     hasStood = true;
-                    standParticles.Play();
+                    
                 }
             }
         }
+    }
+
+    private void Barn_OnCorrectSheepArrived(object sender, Barn.CorrectSheepArgs e) {
+        if (e.sheep == this) {
+            standParticles.Play();
+        }
+    }
+
+    public bool IsStanding() {
+        return hasStood;
+    }
+
+    public SheepSO GetSheepSO() {
+        return sheepSO;
     }
 }

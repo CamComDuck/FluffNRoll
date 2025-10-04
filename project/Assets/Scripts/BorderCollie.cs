@@ -9,7 +9,7 @@ public class BorderCollie : MonoBehaviour {
     [SerializeField] private List<MeshRenderer> meshRenderers;
     [SerializeField] private Transform orientation;
 
-    private const float MOVE_SPEED = 7f;
+    private const float MOVE_SPEED = 12f;
 
     private float horizontalInput;
     private float verticalInput;
