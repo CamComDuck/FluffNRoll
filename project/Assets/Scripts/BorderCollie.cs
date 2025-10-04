@@ -29,26 +29,21 @@ public class BorderCollie : MonoBehaviour {
     }
 
     private void Update() {
-        MyInput();
+        HandleInput();
     }
 
     private void FixedUpdate() {
-        MovePlayer();
+        HandleMovement();
     }
 
-    private void MyInput() {
+    private void HandleInput() {
         horizontalInput = Input.GetAxisRaw("Horizontal");
         verticalInput = Input.GetAxisRaw("Vertical");
     }
 
-    private void MovePlayer() {
+    private void HandleMovement() {
         moveDirection = orientation.forward * verticalInput + orientation.right * horizontalInput;
-
         rigidbody.AddForce(10f * MOVE_SPEED * moveDirection.normalized, ForceMode.Force);
-    }
-
-    public Vector3 GetGlobalPosition() {
-        return transform.position;
     }
 
 }
