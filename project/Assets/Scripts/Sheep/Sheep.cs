@@ -11,8 +11,10 @@ public class Sheep : MonoBehaviour {
 
     private const float BORDER_COLLIE_RADIUS = 20f;
     private const float MOVE_SPEED = 30f;
+    private const string IS_ROLLING_BOOL = "IsRolling";
 
     private Rigidbody rigidbody;
+    private Animator animator;
     private bool hasStood = false;
 
     Vector3 directionToRunAway;
@@ -20,6 +22,7 @@ public class Sheep : MonoBehaviour {
 
     private void Awake() {
         rigidbody = GetComponent<Rigidbody>();
+        animator = GetComponentInChildren<Animator>();
     }
 
     private void Start() {
@@ -55,10 +58,12 @@ public class Sheep : MonoBehaviour {
                     rigidbody.angularVelocity = Vector3.zero;
                     transform.forward = directionToRunAway;
                     hasStood = true;
-                    
+
                 }
             }
         }
+
+        animator.SetBool(IS_ROLLING_BOOL, !IsStanding());
     }
 
     public void ArrivedAtBarn() {

@@ -90,6 +90,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8188547954012320268}
+  - component: {fileID: 6726907819848356991}
   m_Layer: 0
   m_Name: Visual
   m_TagString: Untagged
@@ -113,6 +114,28 @@ Transform:
   - {fileID: 8467502418836368322}
   m_Father: {fileID: 8403257449631925975}
   m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
+--- !u!95 &6726907819848356991
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5907684764090949892}
+  m_Enabled: 1
+  m_Avatar: {fileID: 9000000, guid: 8f80bd1c03ddc2a45973d984bbd6d4f0, type: 3}
+  m_Controller: {fileID: 9100000, guid: 9608c8cbc5ba1f34aabdb61c864ab34d, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &7472400978833878943
 GameObject:
   m_ObjectHideFlags: 0
@@ -5017,6 +5040,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: sheepMesh
       objectReference: {fileID: 0}
+    - target: {fileID: 5866666021909216657, guid: 8f80bd1c03ddc2a45973d984bbd6d4f0, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: c7f92994d919d104fbec233d7fdc7848, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
