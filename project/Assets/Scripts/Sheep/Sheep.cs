@@ -11,6 +11,7 @@ public class Sheep : MonoBehaviour {
     [SerializeField] private AudioClip happyBa;
     [SerializeField] private AudioClip scaredBa;
     [SerializeField] private AudioClip neutralBa;
+    [SerializeField] private AudioClip bounce;
 
 
     private SheepSO sheepSO;
@@ -25,9 +26,13 @@ public class Sheep : MonoBehaviour {
 
     Vector3 directionToRunAway;
 
-    float timeUntilBa = 0f;
-    float timeAtBa = 0f;
-    bool isWaitingToBa = false;
+    float timeUntilNeutralBa = 0f;
+    float timeAtNeutralBa = 0f;
+    bool isWaitingToNeutralBa = false;
+
+    float timeUntilScaredBa = 0f;
+    float timeAtScaredBa = 0f;
+    bool isWaitingToScaredBa = false;
 
     private void Awake() {
         rigidbody = GetComponent<Rigidbody>();
@@ -49,7 +54,8 @@ public class Sheep : MonoBehaviour {
 
             rigidbody.AddForce(10f * MOVE_SPEED * directionToRunAway, ForceMode.Force);
             hasStood = false;
-            isWaitingToBa = false;
+            isWaitingToNeutralBa = false;
+            isWaitingToScaredBa = true;
 
         } else { // Not colliding with border collie
             Collider[] hitCollidersLarge = Physics.OverlapSphere(visualPosition, BORDER_COLLIE_RADIUS * 1.2f, borderCollieMask);
@@ -61,6 +67,7 @@ public class Sheep : MonoBehaviour {
                         transform.eulerAngles = Vector3.zero;
                     }
                     hasStood = true;
+                    isWaitingToScaredBa = false;
                 }
             }
         }
@@ -71,17 +78,30 @@ public class Sheep : MonoBehaviour {
 
     private void Update() {
         if (IsStanding()) {
-            if (isWaitingToBa) {
-                timeUntilBa += Time.deltaTime;
-                if (timeUntilBa >= timeAtBa) {
+            if (isWaitingToNeutralBa) {
+                timeUntilNeutralBa += Time.deltaTime;
+                if (timeUntilNeutralBa >= timeAtNeutralBa) {
                     Vector3 soundPosition = new(transform.position.x + 5, transform.position.y, transform.position.z + 5);
                     AudioSource.PlayClipAtPoint(neutralBa, soundPosition, 1f);
-                    isWaitingToBa = false;
+                    isWaitingToNeutralBa = false;
                 }
             } else {
-                timeUntilBa = 0;
-                timeAtBa = Random.Range(5, 20);
-                isWaitingToBa = true;
+                timeUntilNeutralBa = 0;
+                timeAtNeutralBa = Random.Range(5, 20);
+                isWaitingToNeutralBa = true;
+            }
+        } else {
+            if (isWaitingToScaredBa) {
+                timeUntilScaredBa += Time.deltaTime;
+                if (timeUntilScaredBa >= timeAtScaredBa) {
+                    Vector3 soundPosition = new(transform.position.x + 5, transform.position.y, transform.position.z + 5);
+                    AudioSource.PlayClipAtPoint(scaredBa, soundPosition, 1f);
+                    isWaitingToScaredBa = false;
+                }
+            } else {
+                timeUntilScaredBa = 0;
+                timeAtScaredBa = Random.Range(1.25f, 1.5f);
+                isWaitingToScaredBa = true;
             }
         }
     }
