@@ -11,6 +11,7 @@ public class GridSystem : MonoBehaviour {
     [SerializeField] private Transform barnPrefab;
 
     private const int TILE_SIZE = 5;
+    private const int BORDER_THRESHOLD = 3;
 
     private GridXZ<GridTile> placingGrid;
 
@@ -31,26 +32,59 @@ public class GridSystem : MonoBehaviour {
 
     private void Start() {
         placingGrid = new GridXZ<GridTile>(new Vector2Int(70, 70), TILE_SIZE, new Vector3(-175, 0, -175), (g, v) => new GridTile(g, v));
+        List<Barn> barns = new();
 
         List<int> randomSheepCounts = new();
         for (int i = 0; i < sheepSOs.Count; i++) {
-            int minimum = Random.Range(5, 9);
-            int maximum = Random.Range(10, 15);
+            int minimum = Random.Range(2, 5);
+            int maximum = Random.Range(6, 8);
             int randomSheepCount = Random.Range(minimum, maximum);
             randomSheepCounts.Add(randomSheepCount);
-            Debug.Log(sheepSOs[i].GetName() + ": " + randomSheepCount);
+        }
+
+        for (int i = 0; i < sheepSOs.Count; i++) {
+            bool canBuild = true;
+            int safetyCounter = 0;
+            Vector2Int placingGridPosition;
+            do {
+                int randomGridX = Random.Range(0, placingGrid.GetGridSize().x);
+                int randomGridZ = Random.Range(0, placingGrid.GetGridSize().y);
+                placingGridPosition = new(randomGridX, randomGridZ);
+                canBuild = IsValidPositionToPlaceOnGrid(placingGrid, placingGridPosition, barnPrefab);
+                safetyCounter++;
+            } while (!canBuild && safetyCounter < 20);
+
+            if (canBuild) {
+                PlacedObjOnGrid newObject = BuildOnGrid(barnPrefab, placingGrid, placingGridPosition);
+                Barn newBarn = newObject.gameObject.GetComponent<Barn>();
+                newBarn.SetTargetSheepSO(sheepSOs[i]);
+                barns.Add(newBarn);
+            }
         }
 
         for (int i = 0; i < sheepSOs.Count; i++) {
             for (int j = 0; j < randomSheepCounts[i]; j++) {
-                int randomGridX = Random.Range(0, placingGrid.GetGridSize().x);
-                int randomGridZ = Random.Range(0, placingGrid.GetGridSize().y);
-                Vector2Int placingGridPosition = new(randomGridX, randomGridZ);
-                bool canBuild = IsValidPositionToPlaceOnGrid(placingGrid, placingGridPosition, sheepPrefab);
-                PlacedObjOnGrid newObject = BuildOnGrid(sheepPrefab, placingGrid, placingGridPosition);
-                Sheep newSheep = newObject.gameObject.GetComponent<Sheep>();
-                newSheep.SetSheepSO(sheepSOs[i]);
+                bool canBuild = true;
+                int safetyCounter = 0;
+                Vector2Int placingGridPosition;
+                do {
+                    int randomGridX = Random.Range(0, placingGrid.GetGridSize().x);
+                    int randomGridZ = Random.Range(0, placingGrid.GetGridSize().y);
+                    placingGridPosition = new(randomGridX, randomGridZ);
+                    canBuild = IsValidPositionToPlaceOnGrid(placingGrid, placingGridPosition, sheepPrefab);
+                    safetyCounter++;
+                } while (!canBuild && safetyCounter < 20);
+
+                if (canBuild) {
+                    PlacedObjOnGrid newObject = BuildOnGrid(sheepPrefab, placingGrid, placingGridPosition);
+                    Sheep newSheep = newObject.gameObject.GetComponent<Sheep>();
+                    newSheep.SetSheepSO(sheepSOs[i]);
+                }
             }
+        }
+
+        foreach (Barn b in barns) {
+            b.SetupSheepInScene();
         }
     }
 
@@ -59,7 +93,7 @@ public class GridSystem : MonoBehaviour {
         if (placingPrefab.GetComponent<Barn>() != null) {
             objectGridSize = new(6, 6);
         } else {
-            objectGridSize = new(1, 1);
+            objectGridSize = new(2, 2);
         }
         Vector2Int rotationOffset = GetRotationOffset(direction, objectGridSize);
         Vector3 rotationWorldPosition = new Vector3(rotationOffset.x, 0, rotationOffset.y) * gridPlacingOn.GetCellSize();
@@ -78,7 +112,7 @@ public class GridSystem : MonoBehaviour {
 
     // Returns if object would be placed sucessfully
     public bool IsValidPositionToPlaceOnGrid(GridXZ<GridTile> gridPlacingOn, Vector2Int placingGridPosition, Transform placingPrefab) {
-        if (placingGridPosition.x >= 0 && placingGridPosition.y >= 0 && placingGridPosition.x < gridPlacingOn.GetGridSize().x && placingGridPosition.y < gridPlacingOn.GetGridSize().y) {
+        if (placingGridPosition.x >= BORDER_THRESHOLD && placingGridPosition.y >= BORDER_THRESHOLD && placingGridPosition.x < gridPlacingOn.GetGridSize().x - BORDER_THRESHOLD && placingGridPosition.y < gridPlacingOn.GetGridSize().y - BORDER_THRESHOLD) {
             Vector2Int objectGridSize;
             if (placingPrefab.GetComponent<Barn>() != null) {
                 objectGridSize = new(6, 6);
@@ -94,6 +128,9 @@ public class GridSystem : MonoBehaviour {
 
                 } else if (gridPlacingOn.GetGridObject(gridPosition).HasObject()) {
                     // Debug.LogWarning("Object would be partly inside another object!");
+                    return false;
+                } else if (gridPosition == gridPlacingOn.GetCenterGridPosition()) {
+                    // Don't place on top of the player's starting position
                     return false;
                 }
             }

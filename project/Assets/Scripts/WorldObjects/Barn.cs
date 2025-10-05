@@ -19,26 +19,6 @@ public class Barn : MonoBehaviour {
 
     private List<Image> sheepImages = new();
 
-    private void Start() {
-        foreach (MeshRenderer meshRenderer in sheepColorMeshRenderers) {
-            List<Material> settingMaterials = new() {
-                targetSheepSO.GetMaterial()
-            };
-            meshRenderer.SetMaterials(settingMaterials);
-        }
-
-        Sheep[] allSheepInScene = FindObjectsByType<Sheep>(FindObjectsInactive.Exclude, FindObjectsSortMode.None);
-        foreach (Sheep sheep in allSheepInScene) {
-            if (sheep.GetSheepSO() == targetSheepSO) {
-                totalSheepNeeded += 1;
-                Image newSheepImage = Instantiate(sheepImage, sheepPanel);
-                sheepImages.Add(newSheepImage);
-            }
-        }
-
-        sheepPanel.GetComponent<Image>().color = targetSheepSO.GetColor();
-    }
-
     private void OnTriggerEnter(Collider other) {
         Sheep collidedSheep = other.GetComponentInParent<Sheep>();
         if (collidedSheep != null) { // collided with sheep
@@ -96,6 +76,30 @@ public class Barn : MonoBehaviour {
                 }
             }
         }
+    }
+
+    public void SetTargetSheepSO(SheepSO newSO) {
+        targetSheepSO = newSO;
+
+        foreach (MeshRenderer meshRenderer in sheepColorMeshRenderers) {
+            List<Material> settingMaterials = new() {
+                targetSheepSO.GetMaterial()
+            };
+            meshRenderer.SetMaterials(settingMaterials);
+        }
+    }
+
+    public void SetupSheepInScene() {
+        Sheep[] allSheepInScene = FindObjectsByType<Sheep>(FindObjectsInactive.Exclude, FindObjectsSortMode.None);
+        foreach (Sheep sheep in allSheepInScene) {
+            if (sheep.GetSheepSO() == targetSheepSO) {
+                totalSheepNeeded += 1;
+                Image newSheepImage = Instantiate(sheepImage, sheepPanel);
+                sheepImages.Add(newSheepImage);
+            }
+        }
+
+        sheepPanel.GetComponent<Image>().color = targetSheepSO.GetColor();
     }
 
     public bool HasAllSheepRequired() {

@@ -9,7 +9,7 @@ public class Sheep : MonoBehaviour {
 
     [SerializeField] private SheepSO sheepSO; // Will be set on instantiation
 
-    private const float BORDER_COLLIE_RADIUS = 20f;
+    private const float BORDER_COLLIE_RADIUS = 35f;
     private const float MOVE_SPEED = 30f;
     private const string IS_ROLLING_BOOL = "IsRolling";
 
@@ -35,17 +35,20 @@ public class Sheep : MonoBehaviour {
 
             directionToRunAway = transform.position - borderColliePosition;
             directionToRunAway.Normalize();
+            directionToRunAway.y = 0;
 
             rigidbody.AddForce(10f * MOVE_SPEED * directionToRunAway, ForceMode.Force);
             hasStood = false;
 
         } else { // Not colliding with border collie
-            Collider[] hitCollidersLarge = Physics.OverlapSphere(transform.position, BORDER_COLLIE_RADIUS * 2f, borderCollieMask);
+            Collider[] hitCollidersLarge = Physics.OverlapSphere(transform.position, BORDER_COLLIE_RADIUS * 1.2f, borderCollieMask);
             if (hitCollidersLarge.Length == 0) { // Border collie is far away, so stand up
                 if (!hasStood) {
                     rigidbody.linearVelocity = Vector3.zero;
                     rigidbody.angularVelocity = Vector3.zero;
-                    transform.forward = directionToRunAway;
+                    if (directionToRunAway != Vector3.zero) {
+                        transform.eulerAngles = Vector3.zero;
+                    }
                     hasStood = true;
                 }
             }

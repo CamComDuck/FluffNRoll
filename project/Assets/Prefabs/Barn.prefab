@@ -193,7 +193,7 @@ BoxCollider:
   m_Enabled: 1
   serializedVersion: 3
   m_Size: {x: 26, y: 3, z: 26}
-  m_Center: {x: 0, y: 1.5, z: 0}
+  m_Center: {x: 15, y: 1.5, z: 15}
 --- !u!65 &7069222431116949242
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -214,7 +214,7 @@ BoxCollider:
   m_Enabled: 1
   serializedVersion: 3
   m_Size: {x: 1.5, y: 15, z: 1.5}
-  m_Center: {x: 14.3, y: 7.5, z: 14}
+  m_Center: {x: 29.3, y: 7.5, z: 29}
 --- !u!65 &4741536958929434444
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -235,7 +235,7 @@ BoxCollider:
   m_Enabled: 1
   serializedVersion: 3
   m_Size: {x: 1.5, y: 15, z: 1.5}
-  m_Center: {x: -14, y: 7.5, z: 14.3}
+  m_Center: {x: 1, y: 7.5, z: 29.3}
 --- !u!65 &942768642146657694
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -256,7 +256,7 @@ BoxCollider:
   m_Enabled: 1
   serializedVersion: 3
   m_Size: {x: 1.5, y: 15, z: 1.5}
-  m_Center: {x: -14.3, y: 7.5, z: -14.3}
+  m_Center: {x: 0.7, y: 7.5, z: 0.7}
 --- !u!65 &3869416843796497988
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -277,7 +277,7 @@ BoxCollider:
   m_Enabled: 1
   serializedVersion: 3
   m_Size: {x: 1.5, y: 15, z: 1.5}
-  m_Center: {x: 14.3, y: 7.5, z: -14.3}
+  m_Center: {x: 29.3, y: 7.5, z: 0.7}
 --- !u!114 &4726050174091367336
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -315,7 +315,7 @@ Transform:
   m_GameObject: {fileID: 5828727676520282409}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 15, y: 0, z: 15}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -349,7 +349,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8917844285224554895}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 14.1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -358,7 +358,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 16.8, y: 23.6}
+  m_AnchoredPosition: {x: 30.5, y: 23.6}
   m_SizeDelta: {x: 20, y: 5}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!223 &8640923736896425920
@@ -450,7 +450,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: b97048f0db13d5e4e969b69589f375e1, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.43
+      value: -0.42
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: b97048f0db13d5e4e969b69589f375e1, type: 3}
       propertyPath: m_LocalPosition.z
