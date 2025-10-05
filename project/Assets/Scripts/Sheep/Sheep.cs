@@ -13,7 +13,6 @@ public class Sheep : MonoBehaviour {
     [SerializeField] private AudioClip neutralBa;
     [SerializeField] private AudioClip bounce;
 
-
     private SheepSO sheepSO;
 
     private const float BORDER_COLLIE_RADIUS = 35f;
@@ -24,7 +23,7 @@ public class Sheep : MonoBehaviour {
     private Animator animator;
     private bool hasStood = false;
 
-    Vector3 directionToRunAway;
+    private Vector3 directionToRunAway;
 
     float timeUntilNeutralBa = 0f;
     float timeAtNeutralBa = 0f;
@@ -58,7 +57,7 @@ public class Sheep : MonoBehaviour {
             isWaitingToScaredBa = true;
 
         } else { // Not colliding with border collie
-            Collider[] hitCollidersLarge = Physics.OverlapSphere(visualPosition, BORDER_COLLIE_RADIUS * 1.2f, borderCollieMask);
+            Collider[] hitCollidersLarge = Physics.OverlapSphere(visualPosition, BORDER_COLLIE_RADIUS * 2f, borderCollieMask);
             if (hitCollidersLarge.Length == 0) { // Border collie is far away, so stand up
                 if (!hasStood) {
                     rigidbody.linearVelocity = Vector3.zero;
