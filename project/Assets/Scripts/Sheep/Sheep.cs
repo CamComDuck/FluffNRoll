@@ -58,7 +58,6 @@ public class Sheep : MonoBehaviour {
                     rigidbody.angularVelocity = Vector3.zero;
                     transform.forward = directionToRunAway;
                     hasStood = true;
-
                 }
             }
         }

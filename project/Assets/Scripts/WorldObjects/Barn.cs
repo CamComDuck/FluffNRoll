@@ -72,6 +72,32 @@ public class Barn : MonoBehaviour {
         }
     }
 
+    private void OnTriggerStay(Collider other) {
+        Sheep collidedSheep = other.GetComponentInParent<Sheep>();
+        if (collidedSheep != null) { // collided with sheep
+            if (!sheepInBarn.Contains(collidedSheep) && collidedSheep.IsStanding() && targetSheepSO == collidedSheep.GetSheepSO()) {
+                sheepInBarn.Add(collidedSheep);
+                collidedSheep.ArrivedAtBarn();
+
+                int index = sheepInBarn.Count - 1;
+                sheepImages[index].color = targetSheepSO.GetColor();
+
+                if (HasAllSheepRequired()) {
+                    OnAllSheepArrived?.Invoke(this, EventArgs.Empty);
+                }
+            } else if (sheepInBarn.Contains(collidedSheep) && !collidedSheep.IsStanding() && targetSheepSO == collidedSheep.GetSheepSO()) {
+                sheepInBarn.Remove(collidedSheep);
+
+                int index = sheepInBarn.Count;
+                sheepImages[index].color = Color.white;
+
+                if (sheepInBarn.Count == totalSheepNeeded - 1) {
+                    OnLastSheepLeft?.Invoke(this, EventArgs.Empty);
+                }
+            }
+        }
+    }
+
     public bool HasAllSheepRequired() {
         return sheepInBarn.Count >= totalSheepNeeded;
     }
