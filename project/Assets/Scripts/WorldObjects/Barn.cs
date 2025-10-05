@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -13,6 +14,9 @@ public class Barn : MonoBehaviour {
 
     [SerializeField] private Transform sheepPanel;
     [SerializeField] private Image sheepImage;
+
+    [SerializeField] private TMP_Text sheepNameLabel;
+    [SerializeField] private Canvas sheepNameCanvas;
 
     private List<Sheep> sheepInBarn = new();
     private int totalSheepNeeded;
@@ -86,6 +90,12 @@ public class Barn : MonoBehaviour {
                 targetSheepSO.GetMaterial()
             };
             meshRenderer.SetMaterials(settingMaterials);
+        }
+
+        if (ColorblindMode.Instance.IsColorblindMode()) {
+            sheepNameLabel.text = targetSheepSO.GetName();
+        } else {
+            Destroy(sheepNameCanvas.gameObject);
         }
     }
 

@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -12,6 +13,9 @@ public class Sheep : MonoBehaviour {
     [SerializeField] private AudioClip scaredBa;
     [SerializeField] private AudioClip neutralBa;
     [SerializeField] private AudioClip bounce;
+
+    [SerializeField] private TMP_Text sheepNameLabel;
+    [SerializeField] private Canvas sheepNameCanvas;
 
     private SheepSO sheepSO;
 
@@ -126,6 +130,13 @@ public class Sheep : MonoBehaviour {
         }
         var rend = standParticles.GetComponent<ParticleSystemRenderer>();
         rend.material = sheepSO.GetMaterial();
+
+        if (ColorblindMode.Instance.IsColorblindMode()) {
+            sheepNameLabel.text = sheepSO.GetName();
+        } else {
+            Destroy(sheepNameCanvas.gameObject);
+        }
+        
     }
 
     public bool IsStanding() {

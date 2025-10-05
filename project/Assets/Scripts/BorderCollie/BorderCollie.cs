@@ -8,6 +8,7 @@ public class BorderCollie : MonoBehaviour {
 
     [SerializeField] private List<MeshRenderer> meshRenderers;
     [SerializeField] private Transform orientation;
+    [SerializeField] private Transform colorbindPrefab;
 
     private const float MOVE_SPEED = 12f;
 
@@ -20,6 +21,10 @@ public class BorderCollie : MonoBehaviour {
     private void Awake() {
         if (Instance != null) Debug.LogError("There is more than one BorderCollie instance!");
         Instance = this;
+
+        if (ColorblindMode.Instance == null) {
+            Instantiate(colorbindPrefab);
+        }
 
         rigidbody = GetComponent<Rigidbody>();
 

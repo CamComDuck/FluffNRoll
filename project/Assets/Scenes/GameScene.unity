@@ -1059,6 +1059,7 @@ MonoBehaviour:
   meshRenderers:
   - {fileID: 394551839}
   orientation: {fileID: 1665828351}
+  colorbindPrefab: {fileID: 7689977795718747180, guid: 4392295fa00228146b7ebc63e659e5e6, type: 3}
 --- !u!1 &1208352743
 GameObject:
   m_ObjectHideFlags: 0

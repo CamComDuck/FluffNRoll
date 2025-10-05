@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d10897e9983777840b6cc7e99cf9939e, type: 3}
   m_Name: YellowSheep
   m_EditorClassIdentifier: Assembly-CSharp::SheepSO
-  sheepName: Yellow Sheep
+  sheepName: Yellow
   material: {fileID: 2100000, guid: 19a9b150cdbcaa7428883424403e1c89, type: 2}
   sheepColor: {r: 0.9245283, g: 0.8675932, b: 0.30962977, a: 1}
