@@ -1606,9 +1606,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::GridSystem
   sheepSOs:
   - {fileID: 11400000, guid: 782df3e6146b2e54f9b1922c6262279b, type: 2}
-  - {fileID: 11400000, guid: 3ffaa3a2cd5a87642b4a94dae74edfd3, type: 2}
-  - {fileID: 11400000, guid: 6e4ed10ab7b674241b09f284fe724bc7, type: 2}
-  - {fileID: 11400000, guid: 275f34e87ddc22344a67f3db8dbe1936, type: 2}
   - {fileID: 11400000, guid: 754bd5c27920520438040b8c0399147f, type: 2}
   - {fileID: 11400000, guid: fb45616b7d60ac647b434f28e193dae7, type: 2}
   - {fileID: 11400000, guid: 991d5586e20fdf64781e4bb880fa33c6, type: 2}

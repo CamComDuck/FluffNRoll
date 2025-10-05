@@ -60,7 +60,7 @@ public class Sheep : MonoBehaviour {
             isWaitingToScaredBa = true;
 
         } else { // Not colliding with border collie
-            Collider[] hitCollidersLarge = Physics.OverlapSphere(transform.position, BORDER_COLLIE_RADIUS * 2f, borderCollieMask);
+            Collider[] hitCollidersLarge = Physics.OverlapSphere(transform.position, BORDER_COLLIE_RADIUS * 1.5f, borderCollieMask);
             if (hitCollidersLarge.Length == 0) { // Border collie is far away, so stand up
                 if (!hasStood) {
                     rigidbody.linearVelocity = Vector3.zero;

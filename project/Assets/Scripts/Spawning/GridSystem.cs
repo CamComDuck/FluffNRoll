@@ -12,7 +12,7 @@ public class GridSystem : MonoBehaviour {
     [SerializeField] private Transform grassPrefab;
 
     private const int TILE_SIZE = 5;
-    private const int BORDER_THRESHOLD = 3;
+    private const int BORDER_THRESHOLD = 5;
 
     private GridXZ<GridTile> placingGrid;
 
@@ -37,9 +37,8 @@ public class GridSystem : MonoBehaviour {
 
         List<int> randomSheepCounts = new();
         for (int i = 0; i < sheepSOs.Count; i++) {
-            int minimum = Random.Range(2, 5);
-            int maximum = Random.Range(6, 8);
-            int randomSheepCount = Random.Range(minimum, maximum);
+            int randomSheepCount = Random.Range(2, 5);
+            // int randomSheepCount = 1; // for testing
             randomSheepCounts.Add(randomSheepCount);
         }
 
@@ -105,6 +104,8 @@ public class GridSystem : MonoBehaviour {
         foreach (Barn b in barns) {
             b.SetupSheepInScene();
         }
+
+        SheepBarnCounter.Instance.SetupBarnsInScene();
     }
 
     public PlacedObjOnGrid BuildOnGrid(Transform placingPrefab, GridXZ<GridTile> gridPlacingOn, Vector2Int placingGridPosition) {

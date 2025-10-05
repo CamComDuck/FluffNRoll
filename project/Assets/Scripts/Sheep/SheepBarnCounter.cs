@@ -16,7 +16,7 @@ public class SheepBarnCounter : MonoBehaviour {
         Instance = this;
     }
 
-    private void Start() {
+    public void SetupBarnsInScene() {
         barnsInScene = FindObjectsByType<Barn>(FindObjectsInactive.Exclude, FindObjectsSortMode.InstanceID);
         foreach (Barn barn in barnsInScene) {
             barn.OnAllSheepArrived += Barn_OnAllSheepArrived;
