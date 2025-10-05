@@ -1,0 +1,17 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d10897e9983777840b6cc7e99cf9939e, type: 3}
+  m_Name: PinkSheep
+  m_EditorClassIdentifier: Assembly-CSharp::SheepSO
+  sheepName: Pink Sheep
+  material: {fileID: 2100000, guid: 69294bd185d97ac4db724cb208b24261, type: 2}
+  sheepColor: {r: 0.9254902, g: 0.30980393, b: 0.9108208, a: 1}
