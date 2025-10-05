@@ -3,16 +3,14 @@ using UnityEngine;
 
 public class PlacedObjOnGrid : MonoBehaviour {
     
-    private Vector2Int origin;
     private Transform placedObject;
 
-    public static PlacedObjOnGrid Create(Vector3 worldPosition, Vector2Int origin, Transform spawnPrefab) {
-        Transform placedObjectTransform = Instantiate(spawnPrefab, worldPosition, Quaternion.identity);
+    public static PlacedObjOnGrid Create(Vector3 worldPosition, GridSystem.Direction dir, Transform placingPrefab) {
+        Transform placedObjectTransform = Instantiate(placingPrefab, worldPosition, Quaternion.Euler(0, GridSystem.Instance.GetRotationAngle(dir), 0));
 
-        PlacedObjOnGrid placedObject = placedObjectTransform.GetComponent<PlacedObjOnGrid>();
+        PlacedObjOnGrid newObject = placedObjectTransform.GetComponent<PlacedObjOnGrid>();
 
-        placedObject.origin = origin;
-        return placedObject;
+        return newObject;
     }
 
     public Transform GetObject() {

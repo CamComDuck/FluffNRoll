@@ -1,11 +1,18 @@
 using UnityEngine;
 using System.Collections.Generic;
+using NUnit.Framework;
 
 public class GridSystem : MonoBehaviour {
 
     public static GridSystem Instance { get; private set; }
 
+    [SerializeField] private List<SheepSO> sheepSOs;
+    [SerializeField] private Transform sheepPrefab;
+    [SerializeField] private Transform barnPrefab;
+
     private const int TILE_SIZE = 5;
+
+    private GridXZ<GridTile> placingGrid;
 
     private Direction direction = Direction.DOWN;
 
@@ -22,6 +29,31 @@ public class GridSystem : MonoBehaviour {
         Instance = this;
     }
 
+    private void Start() {
+        placingGrid = new GridXZ<GridTile>(new Vector2Int(70, 70), TILE_SIZE, new Vector3(-175, 0, -175), (g, v) => new GridTile(g, v));
+
+        List<int> randomSheepCounts = new();
+        for (int i = 0; i < sheepSOs.Count; i++) {
+            int minimum = Random.Range(5, 9);
+            int maximum = Random.Range(10, 15);
+            int randomSheepCount = Random.Range(minimum, maximum);
+            randomSheepCounts.Add(randomSheepCount);
+            Debug.Log(sheepSOs[i].GetName() + ": " + randomSheepCount);
+        }
+
+        for (int i = 0; i < sheepSOs.Count; i++) {
+            for (int j = 0; j < randomSheepCounts[i]; j++) {
+                int randomGridX = Random.Range(0, placingGrid.GetGridSize().x);
+                int randomGridZ = Random.Range(0, placingGrid.GetGridSize().y);
+                Vector2Int placingGridPosition = new(randomGridX, randomGridZ);
+                bool canBuild = IsValidPositionToPlaceOnGrid(placingGrid, placingGridPosition, sheepPrefab);
+                PlacedObjOnGrid newObject = BuildOnGrid(sheepPrefab, placingGrid, placingGridPosition);
+                Sheep newSheep = newObject.gameObject.GetComponent<Sheep>();
+                newSheep.SetSheepSO(sheepSOs[i]);
+            }
+        }
+    }
+
     public PlacedObjOnGrid BuildOnGrid(Transform placingPrefab, GridXZ<GridTile> gridPlacingOn, Vector2Int placingGridPosition) {
         Vector2Int objectGridSize;
         if (placingPrefab.GetComponent<Barn>() != null) {
@@ -34,12 +66,13 @@ public class GridSystem : MonoBehaviour {
         Vector3 tileWorldPosition = gridPlacingOn.GetWorldPosition(placingGridPosition);
         Vector3 placedFurnitureWorldPosition = tileWorldPosition + rotationWorldPosition;
 
-        PlacedObjOnGrid placedObject = PlacedObjOnGrid.Create(placedFurnitureWorldPosition, placingGridPosition, direction, placingPrefab);
+        PlacedObjOnGrid placedObject = PlacedObjOnGrid.Create(placedFurnitureWorldPosition, direction, placingPrefab);
         List<Vector2Int> gridPositionList = GetObjectGridPositions(placingGridPosition, direction, objectGridSize);
 
         foreach (Vector2Int gridPosition in gridPositionList) {
             gridPlacingOn.GetGridObject(gridPosition).SetPlacedObject(placedObject);
         }
+
         return placedObject;
     }
 

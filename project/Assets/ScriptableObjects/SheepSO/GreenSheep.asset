@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: GreenSheep
   m_EditorClassIdentifier: Assembly-CSharp::SheepSO
   sheepName: Green Sheep
-  material: {fileID: 2100000, guid: 19a9b150cdbcaa7428883424403e1c89, type: 2}
+  material: {fileID: 2100000, guid: 5da83409e0d62c44eab67181a76261f2, type: 2}
   sheepColor: {r: 0.20342271, g: 0.6320754, b: 0.08050018, a: 1}

@@ -25,17 +25,6 @@ public class Sheep : MonoBehaviour {
         animator = GetComponentInChildren<Animator>();
     }
 
-    private void Start() {
-        foreach (MeshRenderer meshRenderer in sheepColorMeshRenderers) {
-            List<Material> settingMaterials = new() {
-                sheepSO.GetMaterial()
-            };
-            meshRenderer.SetMaterials(settingMaterials);
-        }
-        var rend = standParticles.GetComponent<ParticleSystemRenderer>();
-        rend.material = sheepSO.GetMaterial();
-    }
-
     private void FixedUpdate() {
         Collider[] hitCollidersSmall = Physics.OverlapSphere(transform.position, BORDER_COLLIE_RADIUS, borderCollieMask);
         if (hitCollidersSmall.Length > 0) { // Is colliding with Border Collie to run away
@@ -67,7 +56,18 @@ public class Sheep : MonoBehaviour {
 
     public void ArrivedAtBarn() {
         standParticles.Play();
-        
+    }
+
+    public void SetSheepSO(SheepSO newSO) {
+        sheepSO = newSO;
+        foreach (MeshRenderer meshRenderer in sheepColorMeshRenderers) {
+            List<Material> settingMaterials = new() {
+                sheepSO.GetMaterial()
+            };
+            meshRenderer.SetMaterials(settingMaterials);
+        }
+        var rend = standParticles.GetComponent<ParticleSystemRenderer>();
+        rend.material = sheepSO.GetMaterial();
     }
 
     public bool IsStanding() {
