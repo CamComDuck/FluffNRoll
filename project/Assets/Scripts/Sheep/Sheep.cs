@@ -39,15 +39,14 @@ public class Sheep : MonoBehaviour {
     }
 
     private void FixedUpdate() {
-        Vector3 visualPosition = new(transform.position.x + 5, transform.position.y, transform.position.z + 5);
-        Collider[] hitCollidersSmall = Physics.OverlapSphere(visualPosition, BORDER_COLLIE_RADIUS, borderCollieMask);
+        Collider[] hitCollidersSmall = Physics.OverlapSphere(transform.position, BORDER_COLLIE_RADIUS, borderCollieMask);
         if (hitCollidersSmall.Length > 0) { // Is colliding with Border Collie to run away
             BorderCollie borderCollie = (BorderCollie)hitCollidersSmall[0].GetComponentInParent<BorderCollie>();
             if (borderCollie == null) Debug.LogError("Sheep hit something not a BorderCollie");
 
             Vector3 borderColliePosition = borderCollie.transform.position;
 
-            directionToRunAway = visualPosition - borderColliePosition;
+            directionToRunAway = transform.position - borderColliePosition;
             directionToRunAway.Normalize();
             directionToRunAway.y = 0;
 
@@ -57,7 +56,7 @@ public class Sheep : MonoBehaviour {
             isWaitingToScaredBa = true;
 
         } else { // Not colliding with border collie
-            Collider[] hitCollidersLarge = Physics.OverlapSphere(visualPosition, BORDER_COLLIE_RADIUS * 2f, borderCollieMask);
+            Collider[] hitCollidersLarge = Physics.OverlapSphere(transform.position, BORDER_COLLIE_RADIUS * 2f, borderCollieMask);
             if (hitCollidersLarge.Length == 0) { // Border collie is far away, so stand up
                 if (!hasStood) {
                     rigidbody.linearVelocity = Vector3.zero;
@@ -75,13 +74,21 @@ public class Sheep : MonoBehaviour {
         
     }
 
+    private void OnCollisionEnter(Collision collision) {
+        if (!IsStanding()) {
+            if (collision.gameObject.name == "Floor") {
+                AudioSource.PlayClipAtPoint(bounce, transform.position, 1f);
+            }
+        }
+        
+    }
+
     private void Update() {
         if (IsStanding()) {
             if (isWaitingToNeutralBa) {
                 timeUntilNeutralBa += Time.deltaTime;
                 if (timeUntilNeutralBa >= timeAtNeutralBa) {
-                    Vector3 soundPosition = new(transform.position.x + 5, transform.position.y, transform.position.z + 5);
-                    AudioSource.PlayClipAtPoint(neutralBa, soundPosition, 1f);
+                    AudioSource.PlayClipAtPoint(neutralBa, transform.position, 1f);
                     isWaitingToNeutralBa = false;
                 }
             } else {
@@ -93,8 +100,7 @@ public class Sheep : MonoBehaviour {
             if (isWaitingToScaredBa) {
                 timeUntilScaredBa += Time.deltaTime;
                 if (timeUntilScaredBa >= timeAtScaredBa) {
-                    Vector3 soundPosition = new(transform.position.x + 5, transform.position.y, transform.position.z + 5);
-                    AudioSource.PlayClipAtPoint(scaredBa, soundPosition, 1f);
+                    AudioSource.PlayClipAtPoint(scaredBa, transform.position, 1f);
                     isWaitingToScaredBa = false;
                 }
             } else {
@@ -107,8 +113,7 @@ public class Sheep : MonoBehaviour {
 
     public void ArrivedAtBarn() {
         standParticles.Play();
-        Vector3 soundPosition = new(transform.position.x + 5, transform.position.y, transform.position.z + 5);
-        AudioSource.PlayClipAtPoint(happyBa, soundPosition, 1f);
+        AudioSource.PlayClipAtPoint(happyBa, transform.position, 1f);
     }
 
     public void SetSheepSO(SheepSO newSO) {

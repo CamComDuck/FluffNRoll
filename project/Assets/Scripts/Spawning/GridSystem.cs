@@ -9,6 +9,7 @@ public class GridSystem : MonoBehaviour {
     [SerializeField] private List<SheepSO> sheepSOs;
     [SerializeField] private Transform sheepPrefab;
     [SerializeField] private Transform barnPrefab;
+    [SerializeField] private Transform grassPrefab;
 
     private const int TILE_SIZE = 5;
     private const int BORDER_THRESHOLD = 3;
@@ -47,8 +48,8 @@ public class GridSystem : MonoBehaviour {
             int safetyCounter = 0;
             Vector2Int placingGridPosition;
             do {
-                int randomGridX = Random.Range(0, placingGrid.GetGridSize().x);
-                int randomGridZ = Random.Range(0, placingGrid.GetGridSize().y);
+                int randomGridX = Random.Range(BORDER_THRESHOLD, placingGrid.GetGridSize().x - BORDER_THRESHOLD);
+                int randomGridZ = Random.Range(BORDER_THRESHOLD, placingGrid.GetGridSize().y - BORDER_THRESHOLD);
                 placingGridPosition = new(randomGridX, randomGridZ);
                 canBuild = IsValidPositionToPlaceOnGrid(placingGrid, placingGridPosition, barnPrefab);
                 safetyCounter++;
@@ -62,14 +63,32 @@ public class GridSystem : MonoBehaviour {
             }
         }
 
+        int grassCount = Random.Range(150, 225);
+        for (int i = 0; i < grassCount; i++) {
+            bool canBuild = true;
+            int safetyCounter = 0;
+            Vector2Int placingGridPosition;
+            do {
+                int randomGridX = Random.Range(BORDER_THRESHOLD, placingGrid.GetGridSize().x - BORDER_THRESHOLD);
+                int randomGridZ = Random.Range(BORDER_THRESHOLD, placingGrid.GetGridSize().y - BORDER_THRESHOLD);
+                placingGridPosition = new(randomGridX, randomGridZ);
+                canBuild = IsValidPositionToPlaceOnGrid(placingGrid, placingGridPosition, grassPrefab);
+                safetyCounter++;
+            } while (!canBuild && safetyCounter < 20);
+
+            if (canBuild) {
+                PlacedObjOnGrid newObject = BuildOnGrid(grassPrefab, placingGrid, placingGridPosition);
+            }
+        }
+
         for (int i = 0; i < sheepSOs.Count; i++) {
             for (int j = 0; j < randomSheepCounts[i]; j++) {
                 bool canBuild = true;
                 int safetyCounter = 0;
                 Vector2Int placingGridPosition;
                 do {
-                    int randomGridX = Random.Range(0, placingGrid.GetGridSize().x);
-                    int randomGridZ = Random.Range(0, placingGrid.GetGridSize().y);
+                    int randomGridX = Random.Range(BORDER_THRESHOLD, placingGrid.GetGridSize().x - BORDER_THRESHOLD);
+                    int randomGridZ = Random.Range(BORDER_THRESHOLD, placingGrid.GetGridSize().y - BORDER_THRESHOLD);
                     placingGridPosition = new(randomGridX, randomGridZ);
                     canBuild = IsValidPositionToPlaceOnGrid(placingGrid, placingGridPosition, sheepPrefab);
                     safetyCounter++;
@@ -92,6 +111,8 @@ public class GridSystem : MonoBehaviour {
         Vector2Int objectGridSize;
         if (placingPrefab.GetComponent<Barn>() != null) {
             objectGridSize = new(6, 6);
+        } else if (placingPrefab.GetComponent<Sheep>() != null) {
+                objectGridSize = new(1, 1);
         } else {
             objectGridSize = new(2, 2);
         }
@@ -116,8 +137,10 @@ public class GridSystem : MonoBehaviour {
             Vector2Int objectGridSize;
             if (placingPrefab.GetComponent<Barn>() != null) {
                 objectGridSize = new(6, 6);
-            } else {
+            } else if (placingPrefab.GetComponent<Sheep>() != null) {
                 objectGridSize = new(1, 1);
+            } else {
+                objectGridSize = new(2, 2);
             }
             List<Vector2Int> gridPositionList = GetObjectGridPositions(placingGridPosition, direction, objectGridSize);
 
@@ -126,12 +149,16 @@ public class GridSystem : MonoBehaviour {
                     // Debug.LogWarning("Object would be partly outside grid!");
                     return false;
 
-                } else if (gridPlacingOn.GetGridObject(gridPosition).HasObject()) {
+                } else if (gridPlacingOn.GetGridObject(gridPosition).HasObject() && objectGridSize != new Vector2Int(1, 1)) {
                     // Debug.LogWarning("Object would be partly inside another object!");
                     return false;
                 } else if (gridPosition == gridPlacingOn.GetCenterGridPosition()) {
                     // Don't place on top of the player's starting position
                     return false;
+                } else if (objectGridSize == new Vector2Int(1, 1) && gridPlacingOn.GetGridObject(gridPosition).HasObject()) {
+                    if (gridPlacingOn.GetGridObject(gridPosition).GetPlacedObject().GetComponent<Barn>() != null) {
+                        return false;
+                    }
                 }
             }
             return true;
