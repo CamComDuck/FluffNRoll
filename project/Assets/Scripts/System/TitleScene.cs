@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -14,7 +15,7 @@ public class TitleScene : MonoBehaviour {
         } else {
             colorblindToggle.isOn = false;
         }
-        
+
         startButton.onClick.AddListener(OnStartClicked);
         colorblindToggle.onValueChanged.AddListener(OnColorblindToggled);
         Time.timeScale = 1f;
