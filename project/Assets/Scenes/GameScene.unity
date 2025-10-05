@@ -1606,9 +1606,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::GridSystem
   sheepSOs:
   - {fileID: 11400000, guid: 782df3e6146b2e54f9b1922c6262279b, type: 2}
-  - {fileID: 11400000, guid: 754bd5c27920520438040b8c0399147f, type: 2}
-  - {fileID: 11400000, guid: fb45616b7d60ac647b434f28e193dae7, type: 2}
-  - {fileID: 11400000, guid: 991d5586e20fdf64781e4bb880fa33c6, type: 2}
   sheepPrefab: {fileID: 8403257449631925975, guid: 4e06737f660ad48498e662db209ed25b, type: 3}
   barnPrefab: {fileID: 2445227455174018323, guid: 680d5c0b7e19ec34dadd47a8c346d1c2, type: 3}
   grassPrefab: {fileID: 8910583497998989437, guid: e8960ec46f990e24d9f26ebfc5f5a90c, type: 3}

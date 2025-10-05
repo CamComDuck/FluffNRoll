@@ -37,8 +37,8 @@ public class GridSystem : MonoBehaviour {
 
         List<int> randomSheepCounts = new();
         for (int i = 0; i < sheepSOs.Count; i++) {
-            int randomSheepCount = Random.Range(2, 5);
-            // int randomSheepCount = 1; // for testing
+            // int randomSheepCount = Random.Range(2, 5);
+            int randomSheepCount = 1; // for testing
             randomSheepCounts.Add(randomSheepCount);
         }
 
