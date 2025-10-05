@@ -46,4 +46,8 @@ public class BorderCollie : MonoBehaviour {
         rigidbody.AddForce(10f * MOVE_SPEED * moveDirection.normalized, ForceMode.Force);
     }
 
+    public Transform GetTransform() {
+        return transform;
+    }
+
 }

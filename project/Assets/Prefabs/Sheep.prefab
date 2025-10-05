@@ -54,7 +54,9 @@ MonoBehaviour:
   standParticles: {fileID: 2816030724205521664}
   sheepColorMeshRenderers:
   - {fileID: 8261588756968707387}
-  sheepSO: {fileID: 0}
+  happyBa: {fileID: 8300000, guid: aa684bc0f01472948a3aae9bfe10ed3c, type: 3}
+  scaredBa: {fileID: 8300000, guid: 9c14b74335a26724eba6828f048f69d6, type: 3}
+  neutralBa: {fileID: 8300000, guid: 42a8bae185ea0d348a5e82337caedece, type: 3}
 --- !u!54 &4181619833138634709
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -176,7 +178,7 @@ Transform:
   m_GameObject: {fileID: 7472400978833878943}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 2.21, z: 0}
+  m_LocalPosition: {x: 5, y: 2.21, z: 5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
