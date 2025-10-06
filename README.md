@@ -7,5 +7,5 @@
 ## Third-Party Assets
 
  - All graphics, models, and sounds are original
- - Font "TBD" from [Google Fonts](https://fonts.google.com/specimen/Coiny) licensed under [Open Font License](https://openfontlicense.org/open-font-license-official-text/)
+ - Font "Coiny" from [Google Fonts](https://fonts.google.com/specimen/Coiny) licensed under [Open Font License](https://openfontlicense.org/open-font-license-official-text/)
 
