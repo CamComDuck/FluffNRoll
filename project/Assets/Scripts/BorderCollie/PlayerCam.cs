@@ -10,9 +10,17 @@ public class PlayerCam : MonoBehaviour {
     float xRotation;
     float yRotation;
 
+    float mouseSensitivity;
+
+    private void Awake() {
+        if (ColorblindMode.Instance != null) {
+            mouseSensitivity = ColorblindMode.Instance.GetMouseSensitivity();
+        }
+    }
+
     private void Update() {
-        float mouseX = Input.GetAxisRaw("Mouse X") * Time.deltaTime * sensX;
-        float mouseY = Input.GetAxisRaw("Mouse Y") * Time.deltaTime * sensY;
+        float mouseX = Input.GetAxisRaw("Mouse X") * Time.deltaTime * sensX * mouseSensitivity;
+        float mouseY = Input.GetAxisRaw("Mouse Y") * Time.deltaTime * sensY * mouseSensitivity;
 
         yRotation += mouseX;
         xRotation -= mouseY;
